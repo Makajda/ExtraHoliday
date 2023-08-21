@@ -5,25 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>ExtraHoliday</title>
     <base href="/" />
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="ExtraHoliday.styles.css" rel="stylesheet" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital@1&family=Rubik&display=swap" rel="stylesheet">
+
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 </head>
 
 <body>
-
     <div class="status-bar-safe-area"></div>
 
-    <div id="app">Loading...</div>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+
+        <img src="img/Saturn.png" width="250" style="position:relative;display:block; margin:8vh auto 1rem auto;" />
+    </div>
 
     <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
+        Что-то пошло не так, как ожидалось.
+        <a href="" class="reload">Обновить</a>
         <a class="dismiss">🗙</a>
     </div>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
-
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </body>
 
 </html>

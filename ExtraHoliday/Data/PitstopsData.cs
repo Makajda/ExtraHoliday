@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Makajda. All rights reserved. See LICENSE.md file in the solution root for full license information.
 
 namespace ExtraHoliday.Data;
-public static class PitstopsData
-{
-    public static List<Pitstop> GetAll()
-    {
+public class PitstopsData {
+    List<Pitstop> pitstops;
+    public List<Pitstop> Pitstops { get => pitstops ??= GetAll(); }
+    public List<Pitstop> GetAll() {
         const double SiderealPeriodVenus = 224.70069d;
         const double SiderealPeriodMars = 686.971d;
         const double SiderealPeriodJupiter = 4331.572d;
@@ -12,7 +12,7 @@ public static class PitstopsData
         const double DistanceMoon = 384401d;
         const double SpeedMoon = 5d;
 
-        var retval = new List<Pitstop> {
+        pitstops = new List<Pitstop> {
             // ***************************************************
             new Pitstop() {
                 Key = Lankeys.Year,
@@ -134,10 +134,10 @@ public static class PitstopsData
             }
         };
 
-        var ln = new Ln(Langs.Ru);
-        foreach (var pitstop in retval)
-            pitstop.Title = ln[pitstop.Key];//todo ru
+        var ln = new Ln();
+        foreach (var pitstop in pitstops)
+            pitstop.Title = ln[pitstop.Key];
 
-        return retval;
+        return pitstops;
     }
 }

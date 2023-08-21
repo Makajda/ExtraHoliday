@@ -2,23 +2,31 @@
 
 namespace ExtraHoliday.Data;
 public enum Langs {
-    En, De, Es, Fr, Jp, Pt, Ru, Ua, Zh
+    en, de, es, fr, jp, pt, ru, ua, zh
 }
 public enum Lankeys {
     Name, Day, Hour, Jupiter, Mars, Minute, Month, Moon, Saturn, Second, Venus, Week, Year
 }
-public class Ln(Langs lang) {
+public class Ln {
+    Langs lang = Langs.en;
+    public Ln() {
+        try {
+            if(Enum.TryParse(Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName, out Langs lang))
+                this.lang = lang;
+        }
+        catch (Exception) { }
+    }
 #pragma warning disable CS8524 // The switch expression does not handle some values of its input type (it is not exhaustive) involving an unnamed enum value.
     public string this[Lankeys key] => lang switch {
-        Langs.En => En(key),
-        Langs.De => De(key),
-        Langs.Es => Es(key),
-        Langs.Fr => Fr(key),
-        Langs.Jp => Jp(key),
-        Langs.Pt => Pt(key),
-        Langs.Ru => Ru(key),
-        Langs.Ua => Ua(key),
-        Langs.Zh => Zh(key),
+        Langs.en => En(key),
+        Langs.de => De(key),
+        Langs.es => Es(key),
+        Langs.fr => Fr(key),
+        Langs.jp => Jp(key),
+        Langs.pt => Pt(key),
+        Langs.ru => Ru(key),
+        Langs.ua => Ua(key),
+        Langs.zh => Zh(key),
     };
 
     static string En(Lankeys key) => key switch {

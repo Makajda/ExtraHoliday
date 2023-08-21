@@ -1,0 +1,40 @@
+﻿@page "/Edit/{Year:int}/{Month:int}/{Day:int}/{*Name}"
+
+@inject JsInterop jsInterop
+@inject NavigationManager navigationManager
+
+<MudContainer Class="d-flex justify-center">
+    <MudStack>
+        <h3>@year</h3>
+        <h3>@month</h3>
+        <h3>@day</h3>
+        <h3>@name</h3>
+
+        <MudButton Class="bg-success pa-10" OnClick=Back>Ok</MudButton>
+
+        <MudStack Row Justify=Justify.SpaceAround Class="mud-width-full mt-16">
+             <MudButton Class="bg-danger" OnClick=Back>Del</MudButton>
+             <MudButton Class="bg-warning" OnClick=Back>Add</MudButton>
+         </MudStack>
+     </MudStack>
+ </MudContainer>
+
+ @code {
+    [Parameter] public int Year { get; set; }
+    [Parameter] public int Month { get; set; }
+    [Parameter] public int Day { get; set; }
+    [Parameter] public string Name { get; set; }
+    string name;
+    int year, month, day;
+
+    protected override void OnParametersSet() {
+        name = System.Web.HttpUtility.UrlDecode(Name);
+        year = Year;
+        month = Month;
+        day = Day;
+    }
+
+    async Task Back() {
+        await jsInterop.HistoryBack();
+    }
+}

@@ -1,4 +1,6 @@
-﻿namespace ExtraHoliday; 
+﻿using MudBlazor.Services;
+
+namespace ExtraHoliday; 
 public static class MauiProgram {
     public static MauiApp CreateMauiApp() {
         var builder = MauiApp.CreateBuilder();
@@ -9,12 +11,17 @@ public static class MauiProgram {
             });
 
         builder.Services.AddMauiBlazorWebView();
+        builder.Services.AddMudServices();
 
 #if DEBUG
-		builder.Services.AddBlazorWebViewDeveloperTools();
+        builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-        //todo builder.Services.AddSingleton<WeatherForecastService>();
+        builder.Services.AddScoped<JsInterop>();//scoped for maui
+        builder.Services.AddSingleton<FileHelper>();
+        builder.Services.AddSingleton<PitstopsData>();
+        builder.Services.AddTransient<DaysData>();
+        builder.Services.AddTransient<Calc>();
 
         return builder.Build();
     }

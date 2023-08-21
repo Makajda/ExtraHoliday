@@ -5,9 +5,8 @@ public abstract class Countable {
     public Countable(Day day, Pitstop pitstop, DateTime today) {
         Day = day;
         Pitstop = pitstop;
-        var newValue = (long)Math.Abs(Pitstop.Total(Day.Date.Date, today.Date));
         Date = today;
-        Value = newValue;
+        Value = (long)Math.Abs(Pitstop.Total(Day.Date.Date, today.Date));
     }
 
     public Day Day { get; private set; }

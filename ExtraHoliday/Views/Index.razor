@@ -1,5 +1,58 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@inject JsInterop jsInterop
+@inject NavigationManager navigationManager
+@inject Calc calc
 
-Welcome to your new app.
+@if (resultables is null) return;
+
+<MudStack>
+    @foreach (var r in resultables) {
+        @if (r == start) {
+            <span @ref=startId />
+        }
+        <MudButton Class="pa-0" OnClick="()=>Open(r)">
+            <MudStack Row Justify=Justify.SpaceBetween Spacing=0 Class="mud-width-full" Style=@GetStyle(r)>
+                 <MudText Class="ma-3" Style="color:darkgreen">@r.Date.ToString("MMM d, yyyy")</MudText>
+
+                 <MudStack Class="ma-3 text-center">
+                     <MudText Style="color:crimson">@r.Pitstop.Title: @r.Value.ToString("N0")</MudText>
+                     <MudText><i>@r.Day.Name</i></MudText>
+                 </MudStack>
+
+                 <MudImage Src=@($"img/{r.Pitstop.Key}.png") Height="80" />
+             </MudStack>
+         </MudButton>
+    }
+</MudStack>
+
+@code {
+    ElementReference startId;
+    IEnumerable<Resultable> resultables;
+    Resultable start;
+
+    protected override async Task OnInitializedAsync() {
+        (resultables, start) = await calc.Recalc();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (!firstRender)
+            try {
+                await jsInterop.ScrollToElement(startId);
+            }
+            catch (Exception) { }
+    }
+
+    string GetStyle(Resultable r) {
+        var today = DateTime.Today;
+        var date = (DateTime)r.Date;
+
+        if (date < today) return "background-color:#F6E490";
+        if (date > today) return "background-color:#90CEF6";
+        return "background-color:#F7E2F7";
+    }
+
+    void Open(Resultable r) {
+        navigationManager.NavigateTo($"/{nameof(Edit)}/{r.Day.Date.Year}/{r.Day.Date.Month}/{r.Day.Date.Day}/{System.Web.HttpUtility.UrlEncode(r.Day.Name)}");
+    }
+}
