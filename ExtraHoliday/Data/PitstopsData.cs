@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Makajda. All rights reserved. See LICENSE.md file in the solution root for full license information.
 
 namespace ExtraHoliday.Data;
-public class PitstopsData {
-    List<Pitstop> pitstops;
-    public List<Pitstop> Pitstops { get => pitstops ??= GetAll(); }
-    public List<Pitstop> GetAll() {
+public static class PitstopsData {
+    public static List<Pitstop> GetAll() {
         const double SiderealPeriodVenus = 224.70069d;
         const double SiderealPeriodMars = 686.971d;
         const double SiderealPeriodJupiter = 4331.572d;
@@ -12,7 +10,7 @@ public class PitstopsData {
         const double DistanceMoon = 384401d;
         const double SpeedMoon = 5d;
 
-        pitstops = new List<Pitstop> {
+        var pitstops = new List<Pitstop> {
             // ***************************************************
             new Pitstop() {
                 Key = Lankeys.Year,

@@ -1,23 +1,22 @@
 ﻿// Copyright (c) Makajda. All rights reserved. See LICENSE.md file in the solution root for full license information.
 
 namespace ExtraHoliday.Data;
-public class DaysData(FileHelper fileHelper) {
+public class DaysData {
     const string filename = "days.txt";
     const string dateFormat = "yyyyMMdd";
 
-    public async Task<List<Day>> GetDays() {
+    public async Task<List<Day>> GetAll() {
         var days = new List<Day>();
         try {
-            var r = await fileHelper.ReadTextAsync(filename);
+            var r = await FileHelper.ReadTextAsync(filename);
             var s = r.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var d in s) {
                 var day = GetDay(d);
-                if (day != null) {
+                if (day != null)
                     days.Add(day);
-                }
             }
         }
-        catch(Exception) { }
+        catch (Exception) { }
 
         if (days.Count == 0) {
             days.Add(new Day { Date = new DateTime(1732, 2, 22), Name = "George Washington" });
@@ -33,28 +32,9 @@ public class DaysData(FileHelper fileHelper) {
         return days;
     }
 
-    public async Task AddDay(Day day) {
-        var days = await GetDays();
-        days.Add(day);
-        await WriteDays(days);
-    }
-
-    public async Task EditDay(Day originalDay, Day day) {
-        var days = await GetDays();
-        var findingDay = days.FirstOrDefault(n => n.Equals(originalDay));
-        if (findingDay != null) {
-            day.CopyTo(findingDay);
-            await WriteDays(days);
-        }
-    }
-
-    public async Task RemoveDay(Day originalDay) {
-        var days = await GetDays();
-        var findingDay = days.FirstOrDefault(n => n.Equals(originalDay));
-        if (findingDay != null) {
-            days.Remove(findingDay);
-            await WriteDays(days);
-        }
+    public async Task Save(List<Day> days) {
+        var r = string.Join(Environment.NewLine, days.Select((day) => $"{day.Date.ToString(dateFormat)} {day.Name}"));
+        await FileHelper.WriteTextAsync(filename, r);
     }
 
     static Day GetDay(string line) {
@@ -76,10 +56,5 @@ public class DaysData(FileHelper fileHelper) {
         }
 
         return day;
-    }
-
-    async Task WriteDays(IEnumerable<Day> days) {
-        var r = string.Join(Environment.NewLine, days.Select((day) => $"{day.Date.ToString(dateFormat)} {day.Name}"));
-        await fileHelper.WriteTextAsync(filename, r);
     }
 }

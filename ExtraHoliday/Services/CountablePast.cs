@@ -2,8 +2,7 @@
 
 namespace ExtraHoliday.Services;
 public class CountablePast : Countable {
-    public CountablePast(Day day, Pitstop pitstop, DateTime today)
-        : base(day, pitstop, today) {
+    public CountablePast(Day day, Pitstop pitstop, DateTime today) : base(day, pitstop, today) {
         RecreateCutoff(0);
         while (!IsStoped && Date.Date >= today.Date) {
             RecreateCutoff(1d);

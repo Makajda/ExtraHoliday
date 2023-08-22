@@ -5,10 +5,10 @@ public enum Langs {
     en, de, es, fr, jp, pt, ru, ua, zh
 }
 public enum Lankeys {
-    Name, Day, Hour, Jupiter, Mars, Minute, Month, Moon, Saturn, Second, Venus, Week, Year
+    Day, Hour, Jupiter, Mars, Minute, Month, Moon, Saturn, Second, Venus, Week, Year
 }
 public class Ln {
-    Langs lang = Langs.en;
+    readonly Langs lang = Langs.en;
     public Ln() {
         try {
             if(Enum.TryParse(Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName, out Langs lang))
@@ -30,7 +30,6 @@ public class Ln {
     };
 
     static string En(Lankeys key) => key switch {
-        Lankeys.Name => "Day name",
         Lankeys.Day => "Days",
         Lankeys.Hour => "Hours",
         Lankeys.Jupiter => "Years on Jupiter",
@@ -46,7 +45,6 @@ public class Ln {
     };
 
     static string De(Lankeys key) => key switch {
-        Lankeys.Name => "Der Name des Tages",
         Lankeys.Day => "Tage",
         Lankeys.Hour => "Stunden",
         Lankeys.Jupiter => "Jahren auf Jupiter",
@@ -62,7 +60,6 @@ public class Ln {
     };
 
     static string Es(Lankeys key) => key switch {
-        Lankeys.Name => "Nombre del día",
         Lankeys.Day => "Días",
         Lankeys.Hour => "Horas",
         Lankeys.Jupiter => "Años en Júpiter",
@@ -78,7 +75,6 @@ public class Ln {
     };
 
     static string Fr(Lankeys key) => key switch {
-        Lankeys.Name => "Nom du jour",
         Lankeys.Day => "Jours",
         Lankeys.Hour => "Heures",
         Lankeys.Jupiter => "Années sur Jupiter",
@@ -94,7 +90,6 @@ public class Ln {
     };
 
     static string Jp(Lankeys key) => key switch {
-        Lankeys.Name => "曜日名",
         Lankeys.Day => "日数",
         Lankeys.Hour => "営業時間",
         Lankeys.Jupiter => "木星の年",
@@ -110,7 +105,6 @@ public class Ln {
     };
 
     static string Pt(Lankeys key) => key switch {
-        Lankeys.Name => "Nome do dia",
         Lankeys.Day => "Dias",
         Lankeys.Hour => "Horas",
         Lankeys.Jupiter => "Anos em Júpiter",
@@ -126,7 +120,6 @@ public class Ln {
     };
 
     static string Ru(Lankeys key) => key switch {
-        Lankeys.Name => "Название дня",
         Lankeys.Day => "Дней",
         Lankeys.Hour => "Часов",
         Lankeys.Jupiter => "Лет на Юпитере",
@@ -142,7 +135,6 @@ public class Ln {
     };
 
     static string Ua(Lankeys key) => key switch {
-        Lankeys.Name => "Назва дня",
         Lankeys.Day => "Днiв",
         Lankeys.Hour => "Годин",
         Lankeys.Jupiter => "Рокiв на Юпiтерi",
@@ -158,7 +150,6 @@ public class Ln {
     };
 
     static string Zh(Lankeys key) => key switch {
-        Lankeys.Name => "日名",
         Lankeys.Day => "天数",
         Lankeys.Hour => "营业时间",
         Lankeys.Jupiter => "木星岁月",

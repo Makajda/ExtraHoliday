@@ -1,4 +1,9 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@inject DataContext data
+
+<MudThemeProvider Theme="theme" DefaultScrollbar="false" />
+<MudDialogProvider />
+
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
@@ -9,3 +14,17 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+    MudTheme theme = new MudTheme() {
+            Typography = new Typography() {
+                Default = new Default() {
+                    FontFamily = new[] { "Rubik", "Helvetica", "Arial", "sans-serif" }
+                }
+            },
+        };
+
+    protected override async Task OnInitializedAsync() {
+        await data.Initialize();
+    }
+}

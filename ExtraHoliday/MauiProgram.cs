@@ -18,8 +18,7 @@ public static class MauiProgram {
 #endif
 
         builder.Services.AddScoped<JsInterop>();//scoped for maui
-        builder.Services.AddSingleton<FileHelper>();
-        builder.Services.AddSingleton<PitstopsData>();
+        builder.Services.AddSingleton<DataContext>();
         builder.Services.AddTransient<DaysData>();
         builder.Services.AddTransient<Calc>();
 

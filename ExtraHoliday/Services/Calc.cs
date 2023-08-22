@@ -1,50 +1,44 @@
 ﻿// Copyright (c) Makajda. All rights reserved. See LICENSE.md file in the solution root for full license information.
 
 namespace ExtraHoliday.Services;
-public class Calc(DaysData daysData, PitstopsData pitstopsData) {
-    const int CountPast = 133;
+public class Calc(DataContext data) {
+    const int CountPast = 77;
     const int CountToday = int.MaxValue;
     const int CountFuture = 199;
 
-    public async Task<(IEnumerable<Resultable> resultables, Resultable startToday)> Recalc() {
-        var pitstops = pitstopsData.Pitstops;
-        var days = await daysData.GetDays();
-        Resultable startView = null;
-        List<Resultable> resultablePast = null, resultableToday = null, resultableFuture = null;
+    public async Task<(IEnumerable<Hoda> hodas, Hoda startToday)> Recalc() {
+        Hoda startView = null;
+        List<Hoda> hodaPast = null, hodaToday = null, hodaFuture = null;
 
         var tasks = new[] {
                     Task.Factory.StartNew(() =>
                     {
-                        resultablePast = Recalc(days, pitstops, CountPast, (d, p, t) => new CountablePast(d, p, t), (x, y) => x > y);
-                        startView = resultablePast.Skip(1).FirstOrDefault();
-                        resultablePast.Reverse();
+                        hodaPast = Recalc(CountPast, (d, p, t) => new CountablePast(d, p, t), (x, y) => x > y);
+                        startView = hodaPast.Skip(1).FirstOrDefault();
+                        hodaPast.Reverse();
                     }),
-                    Task.Factory.StartNew(() => resultableToday = Recalc(days, pitstops, CountToday, (d, p, t) => new CountableToday(d, p, t), (x, y) => x == y)),
-                    Task.Factory.StartNew(() => resultableFuture = Recalc(days, pitstops, CountFuture, (d, p, t) => new CountableFuture(d, p, t), (x, y) => x < y))
+                    Task.Factory.StartNew(() => hodaToday = Recalc(CountToday, (d, p, t) => new CountableToday(d, p, t), (x, y) => x == y)),
+                    Task.Factory.StartNew(() => hodaFuture = Recalc(CountFuture, (d, p, t) => new CountableFuture(d, p, t), (x, y) => x < y))
                 };
 
         await Task.WhenAll(tasks);
 
-        List<Resultable> resultables = new();
-        resultables.AddRange(resultablePast);
-        resultables.AddRange(resultableToday);
-        resultables.AddRange(resultableFuture);
+        List<Hoda> hodas = new();
+        hodas.AddRange(hodaPast);
+        hodas.AddRange(hodaToday);
+        hodas.AddRange(hodaFuture);
 
-        return (resultables, startView);
+        return (hodas, startView);
     }
 
-    static List<Resultable> Recalc(IEnumerable<Day> days, IEnumerable<Pitstop> pitstops, int count,
-        Func<Day, Pitstop, DateTime, Countable> createCountable, Func<DateTime, DateTime, bool> nextPredicate) {
-        var resultables = new List<Resultable>();
-
+    List<Hoda> Recalc(int count, Func<Day, Pitstop, DateTime, Countable> createCountable, Func<DateTime, DateTime, bool> nextPredicate) {
+        var hodas = new List<Hoda>();
         var countables = new List<Countable>();
         var today = DateTime.Today;
 
-        foreach (var day in days) {
-            foreach (var pitstop in pitstops) {
+        foreach (var day in data.Days)
+            foreach (var pitstop in data.Pitstops)
                 countables.Add(createCountable(day, pitstop, today));
-            }
-        }
 
         while (true) {
             var selCountable = countables.Aggregate((x, y) => x.IsStoped ? y :
@@ -55,8 +49,8 @@ public class Calc(DaysData daysData, PitstopsData pitstopsData) {
             }
 
             if (selCountable.Value > 0 || selCountable.Pitstop.IsAllowZero) {
-                resultables.Add(new Resultable(selCountable));
-                if (resultables.Count >= count) {
+                hodas.Add(new Hoda(selCountable));
+                if (hodas.Count >= count) {
                     break;
                 }
             }
@@ -64,6 +58,6 @@ public class Calc(DaysData daysData, PitstopsData pitstopsData) {
             selCountable.CalcNext();
         }
 
-        return resultables;
+        return hodas;
     }
 }

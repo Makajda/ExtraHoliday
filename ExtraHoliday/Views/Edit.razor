@@ -1,40 +1,67 @@
-﻿@page "/Edit/{Year:int}/{Month:int}/{Day:int}/{*Name}"
+﻿@page "/Edit/{index:int}"
 
 @inject JsInterop jsInterop
 @inject NavigationManager navigationManager
+@inject DataContext data
 
-<MudContainer Class="d-flex justify-center">
-    <MudStack>
-        <h3>@year</h3>
-        <h3>@month</h3>
-        <h3>@day</h3>
-        <h3>@name</h3>
+<MudStack Class="mt-8">
+    @if (!isAdd) {
+        <MudFab Color=Color.Primary Class="align-self-end" StartIcon=@Icons.Material.Filled.Add OnClick=Add Title="Добавить" />
+    }
+    <MudDatePicker @bind-Date=@date Class="mt-8" />
+    <MudTextField @bind-Value=@name Immediate T=string Variant=@Variant.Outlined autocomplete="new-password" />
 
-        <MudButton Class="bg-success pa-10" OnClick=Back>Ok</MudButton>
-
-        <MudStack Row Justify=Justify.SpaceAround Class="mud-width-full mt-16">
-             <MudButton Class="bg-danger" OnClick=Back>Del</MudButton>
-             <MudButton Class="bg-warning" OnClick=Back>Add</MudButton>
-         </MudStack>
+     <MudStack Row Justify=Justify.SpaceBetween Class="mud-width-full">
+         <MudFab Color=Color.Dark StartIcon=@Icons.Material.Filled.Delete OnClick=Delete />
+         <MudFab Color=Color.Success StartIcon=@Icons.Material.Filled.Check OnClick=Ok Title="Ok" />
      </MudStack>
- </MudContainer>
+ </MudStack>
 
  @code {
-    [Parameter] public int Year { get; set; }
-    [Parameter] public int Month { get; set; }
-    [Parameter] public int Day { get; set; }
-    [Parameter] public string Name { get; set; }
+    [Parameter] public int Index { get; set; }
+    Day day;
     string name;
-    int year, month, day;
+    DateTime? date;
+    bool isAdd;
 
     protected override void OnParametersSet() {
-        name = System.Web.HttpUtility.UrlDecode(Name);
-        year = Year;
-        month = Month;
-        day = Day;
+        day = data.Days[Index];
+        date = day.Date;
+        name = day.Name;
     }
 
-    async Task Back() {
+    async Task Ok() {
+        if (isAdd) {
+            data.Days.Add(new Day { Date = date.Value, Name = name });
+            await data.Save();
+        }
+        else
+            await Save();
+
         await jsInterop.HistoryBack();
+    }
+
+    async Task Delete() {
+        if (!isAdd) {
+            data.Days.RemoveAt(Index);
+            await data.Save();
+        }
+
+        await jsInterop.HistoryBack();
+    }
+
+    async Task Add() {
+        await Save();
+        isAdd = true;
+        date = date.Value.AddDays(1);
+        name = null;
+    }
+
+    async Task Save() {
+        if (day.Date != date || day.Name != name) {
+            day.Date = date.Value;
+            day.Name = name;
+            await data.Save();
+        }
     }
 }

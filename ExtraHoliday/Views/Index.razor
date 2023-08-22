@@ -2,17 +2,18 @@
 
 @inject JsInterop jsInterop
 @inject NavigationManager navigationManager
+@inject DataContext data
 @inject Calc calc
 
-@if (resultables is null) return;
+@if (hodas is null) return;
 
 <MudStack>
-    @foreach (var r in resultables) {
+    @foreach (var r in hodas) {
         @if (r == start) {
             <span @ref=startId />
         }
         <MudButton Class="pa-0" OnClick="()=>Open(r)">
-            <MudStack Row Justify=Justify.SpaceBetween Spacing=0 Class="mud-width-full" Style=@GetStyle(r)>
+            <MudStack Row Justify=Justify.SpaceBetween Spacing=0 Class="mud-width-full" Style=@GetStyle(r.Date)>
                  <MudText Class="ma-3" Style="color:darkgreen">@r.Date.ToString("MMM d, yyyy")</MudText>
 
                  <MudStack Class="ma-3 text-center">
@@ -28,11 +29,11 @@
 
 @code {
     ElementReference startId;
-    IEnumerable<Resultable> resultables;
-    Resultable start;
+    IEnumerable<Hoda> hodas;
+    Hoda start;
 
     protected override async Task OnInitializedAsync() {
-        (resultables, start) = await calc.Recalc();
+        (hodas, start) = await calc.Recalc();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
@@ -43,16 +44,14 @@
             catch (Exception) { }
     }
 
-    string GetStyle(Resultable r) {
+    string GetStyle(DateTime date) {
         var today = DateTime.Today;
-        var date = (DateTime)r.Date;
-
         if (date < today) return "background-color:#F6E490";
         if (date > today) return "background-color:#90CEF6";
         return "background-color:#F7E2F7";
     }
 
-    void Open(Resultable r) {
-        navigationManager.NavigateTo($"/{nameof(Edit)}/{r.Day.Date.Year}/{r.Day.Date.Month}/{r.Day.Date.Day}/{System.Web.HttpUtility.UrlEncode(r.Day.Name)}");
+    void Open(Hoda hoda) {
+        navigationManager.NavigateTo($"/{nameof(Edit)}/{data.Days.IndexOf(hoda.Day)}");
     }
 }
