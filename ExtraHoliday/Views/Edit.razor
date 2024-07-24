@@ -1,4 +1,4 @@
-﻿@page "/Edit/{index:int}"
+﻿@page "/edit/{index:int}"
 
 @inject JsInterop jsInterop
 @inject NavigationManager navigationManager
@@ -6,14 +6,14 @@
 
 <MudStack Class="mt-8">
     @if (!isAdd) {
-        <MudFab Color=Color.Primary Class="align-self-end" StartIcon=@Icons.Material.Filled.Add OnClick=Add Title="Добавить" />
+        <MudFab Color=Color.Primary Class="align-self-end" StartIcon=@Icons.Material.Filled.Add OnClick=Add title="Добавить" />
     }
     <MudDatePicker @bind-Date=@date Class="mt-8" />
     <MudTextField @bind-Value=@name Immediate T=string Variant=@Variant.Outlined autocomplete="new-password" />
 
      <MudStack Row Justify=Justify.SpaceBetween Class="mud-width-full">
          <MudFab Color=Color.Dark StartIcon=@Icons.Material.Filled.Delete OnClick=Delete />
-         <MudFab Color=Color.Success StartIcon=@Icons.Material.Filled.Check OnClick=Ok Title="Ok" />
+         <MudFab Color=Color.Success StartIcon=@Icons.Material.Filled.Check OnClick=Ok title="Ok" />
      </MudStack>
  </MudStack>
 

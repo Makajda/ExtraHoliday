@@ -1,6 +1,7 @@
 ﻿@inject DataContext data
 
 <MudThemeProvider Theme="theme" DefaultScrollbar="false" />
+<MudPopoverProvider />
 <MudDialogProvider />
 
 <Router AppAssembly="@typeof(App).Assembly">
@@ -19,12 +20,8 @@
     MudTheme theme = new MudTheme() {
             Typography = new Typography() {
                 Default = new Default() {
-                    FontFamily = new[] { "Rubik", "Helvetica", "Arial", "sans-serif" }
+                    FontFamily = new[] { "Lobster", "Rubik", "Helvetica", "Arial", "sans-serif" }
                 }
             },
         };
-
-    protected override async Task OnInitializedAsync() {
-        await data.Initialize();
-    }
 }

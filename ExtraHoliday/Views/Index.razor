@@ -5,7 +5,7 @@
 @inject DataContext data
 @inject Calc calc
 
-@if (hodas is null) return;
+@if (hodas is null || data.Days is null) return;
 
 <MudStack>
     @foreach (var r in hodas) {
@@ -14,16 +14,16 @@
         }
         <MudButton Class="pa-0" OnClick="()=>Open(r)">
             <MudStack Row Justify=Justify.SpaceBetween Spacing=0 Class="mud-width-full" Style=@GetStyle(r.Date)>
-                 <MudText Class="ma-3" Style="color:darkgreen">@r.Date.ToString("MMM d, yyyy")</MudText>
+                <MudText Class="ma-3" Style="color:darkgreen">@r.Date.ToString("MMM d, yyyy")</MudText>
 
-                 <MudStack Class="ma-3 text-center">
-                     <MudText Style="color:crimson">@r.Pitstop.Title: @r.Value.ToString("N0")</MudText>
-                     <MudText><i>@r.Day.Name</i></MudText>
-                 </MudStack>
+                <MudStack Class="ma-3 text-center">
+                    <MudText Style="color:crimson">@r.Pitstop.Title: @r.Value.ToString("N0")</MudText>
+                    <MudText><i>@r.Day.Name</i></MudText>
+                </MudStack>
 
-                 <MudImage Src=@($"img/{r.Pitstop.Key}.png") Height="80" />
-             </MudStack>
-         </MudButton>
+                <MudImage Src=@($"img/{r.Pitstop.Key}.png") Height="80" />
+            </MudStack>
+        </MudButton>
     }
 </MudStack>
 
@@ -33,6 +33,7 @@
     Hoda start;
 
     protected override async Task OnInitializedAsync() {
+        await data.Initialize();
         (hodas, start) = await calc.Recalc();
     }
 

@@ -27,6 +27,7 @@ public class DaysData {
             days.Add(new Day { Date = new DateTime(1961, 8, 4), Name = "Barack Obama" });
             days.Add(new Day { Date = new DateTime(1946, 6, 14), Name = "Donald Trump" });
             days.Add(new Day { Date = new DateTime(1942, 11, 20), Name = "Joseph Biden" });
+            days.Add(new Day { Date = new DateTime(1964, 10, 20), Name = "Kamala Harris" });
         }
 
         return days;
