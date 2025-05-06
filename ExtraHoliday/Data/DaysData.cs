@@ -17,7 +17,7 @@ public partial class DaysData {
             }
         }
         catch (Exception) { }
-        days = [];
+
         if (days.Count == 0) {
             days.Add(new Day { Date = new DateTime(1732, 2, 22), Name = "George Washington" });
             days.Add(new Day { Date = new DateTime(1886, 5, 8), Name = "Coca-Cola" });

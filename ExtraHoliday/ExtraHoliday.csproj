@@ -20,8 +20,8 @@
 		<ApplicationIdGuid>E6F27C84-B8B6-49AB-ABF2-470069409B6D</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>5.7</ApplicationDisplayVersion>
-		<ApplicationVersion>7</ApplicationVersion>
+		<ApplicationDisplayVersion>5.8</ApplicationDisplayVersion>
+		<ApplicationVersion>8</ApplicationVersion>
 
 		<!--<WindowsPackageType>None</WindowsPackageType>-->
 
