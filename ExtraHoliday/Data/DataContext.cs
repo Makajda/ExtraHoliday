@@ -1,11 +1,11 @@
 ﻿namespace ExtraHoliday.Data;
-public class DataContext(DaysData daysData) {
+public class DataContext() {
     public async Task Initialize() {
-        Days = await daysData.GetAll();
+        Days = await DaysData.GetAll();
     }
 
     public List<Pitstop> Pitstops { get; } = PitstopsData.GetAll();
     public List<Day> Days { get; private set; }
 
-    public Task Save() => daysData.Save(Days);
+    public Task Save() => DaysData.Save(Days);
 }

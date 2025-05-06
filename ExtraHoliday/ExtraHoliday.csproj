@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+		<TargetFrameworks>net9.0-android</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+
 		<OutputType>Exe</OutputType>
 		<RootNamespace>ExtraHoliday</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -21,15 +20,14 @@
 		<ApplicationIdGuid>E6F27C84-B8B6-49AB-ABF2-470069409B6D</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>5.0</ApplicationDisplayVersion>
-		<ApplicationVersion>5</ApplicationVersion>
+		<ApplicationDisplayVersion>5.7</ApplicationDisplayVersion>
+		<ApplicationVersion>7</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<!--<WindowsPackageType>None</WindowsPackageType>-->
+
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -51,10 +49,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.70" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.70" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.70" />
-		<PackageReference Include="MudBlazor" Version="7.4.0" />
+		<PackageReference Include="MudBlazor" Version="8.5.1" />
 	</ItemGroup>
 
 </Project>

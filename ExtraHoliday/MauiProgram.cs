@@ -1,6 +1,6 @@
 ﻿using MudBlazor.Services;
 
-namespace ExtraHoliday; 
+namespace ExtraHoliday;
 public static class MauiProgram {
     public static MauiApp CreateMauiApp() {
         var builder = MauiApp.CreateBuilder();
@@ -19,7 +19,6 @@ public static class MauiProgram {
 
         builder.Services.AddScoped<JsInterop>();//scoped for maui
         builder.Services.AddSingleton<DataContext>();
-        builder.Services.AddTransient<DaysData>();
         builder.Services.AddTransient<Calc>();
 
         return builder.Build();
