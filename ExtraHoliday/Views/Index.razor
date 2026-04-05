@@ -5,6 +5,12 @@
 @inject DataContext data
 @inject Calc calc
 
+<style>
+    body {
+        background-image: url( @($"_content/ExtraHoliday/img/background-stars.png") )
+    }
+</style>
+
 @if (hodas is null || data.Days is null) return;
 
 <MudStack>
@@ -12,7 +18,7 @@
         @if (r == start) {
             <span @ref=startId />
         }
-        <MudButton Class="pa-0" OnClick="()=>Open(r)">
+        <MudButton Class="pa-0" OnClick="() => Open(r)">
             <MudStack Row Justify=Justify.SpaceBetween Spacing=0 Class="mud-width-full" Style=@GetStyle(r.Date)>
                 <MudText Class="ma-3" Style="color:darkgreen">@r.Date.ToString("MMM d, yyyy")</MudText>
 
@@ -28,7 +34,7 @@
 </MudStack>
 
 @code {
-    ElementReference startId;
+    ElementReference startId = default!;
     IEnumerable<Hoda> hodas;
     Hoda start;
 

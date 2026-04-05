@@ -20,12 +20,12 @@
 		<ApplicationIdGuid>E6F27C84-B8B6-49AB-ABF2-470069409B6D</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>5.8</ApplicationDisplayVersion>
-		<ApplicationVersion>8</ApplicationVersion>
+		<ApplicationDisplayVersion>5.9</ApplicationDisplayVersion>
+		<ApplicationVersion>9</ApplicationVersion>
 
 		<!--<WindowsPackageType>None</WindowsPackageType>-->
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
@@ -49,9 +49,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.70" />
-		<PackageReference Include="MudBlazor" Version="8.5.1" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.81" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.81" />
+		<PackageReference Include="MudBlazor" Version="8.9.0" />
 	</ItemGroup>
 
 </Project>

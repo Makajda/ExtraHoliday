@@ -22,7 +22,6 @@ public partial class DaysData {
             days.Add(new Day { Date = new DateTime(1732, 2, 22), Name = "George Washington" });
             days.Add(new Day { Date = new DateTime(1886, 5, 8), Name = "Coca-Cola" });
             days.Add(new Day { Date = new DateTime(1928, 11, 18), Name = "Mickey Mouse" });
-            days.Add(new Day { Date = new DateTime(1954, 7, 5), Name = "That's All Right" });
             days.Add(new Day { Date = new DateTime(1998, 9, 4), Name = "Google" });
         }
 
@@ -30,7 +29,6 @@ public partial class DaysData {
     }
 
     public static async Task Save(List<Day> days) {
-        return;
         var r = string.Join(Environment.NewLine, days.Select((day) => $"{day.Date.ToString(dateFormat)} {day.Name}"));
         await FileHelper.WriteTextAsync(filename, r);
     }
